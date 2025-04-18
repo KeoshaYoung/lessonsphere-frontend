@@ -1,90 +1,101 @@
-import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
-import SignIn from "./SignIn";
-import { signOut } from "firebase/auth";
+// lessonsphere-landing-page/src/App.jsx
+import React from "react";
 
-function App() {
-  const [user, setUser] = useState(null);
-  const [name, setName] = useState("Ms. Johnson");
-  const [standard, setStandard] = useState("SS.BUSINESS.4.1");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        setUser(firebaseUser);
-        setName(firebaseUser.displayName || "Ms. Johnson");
-      } else {
-        setUser(null);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    const response = await fetch("https://lessonsphere-backend.onrender.com/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user: { name },
-        standard,
-      }),
-    });
-
-    if (response.ok) {
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "lesson_plan.docx";
-      a.click();
-    }
-    setLoading(false);
-  };
-
-  if (!user) return <SignIn onLogin={() => {}} />;
-
+export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6 text-blue-600">
-          LessonSphere
+    <div className="bg-white min-h-screen text-gray-800 font-sans">
+      {/* Hero Section */}
+      <section className="bg-blue-50 px-6 py-20 text-center">
+        <h1 className="text-4xl font-bold text-blue-700 mb-4">
+          Streamline Your Lesson Planning with AI
         </h1>
-        <label className="block mb-2 font-medium">Your Name</label>
-        <input
-          className="w-full border px-3 py-2 rounded mb-4"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <p className="text-lg text-gray-700 mb-6 max-w-xl mx-auto">
+          Instantly generate customized lesson plans aligned with your district’s standards.
+        </p>
+        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition">
+          Generate Your Lesson Plan
+        </button>
+      </section>
 
-        <label className="block mb-2 font-medium">Standard</label>
-        <select
-          className="w-full border px-3 py-2 rounded mb-6"
-          value={standard}
-          onChange={(e) => setStandard(e.target.value)}
-        >
-          <option value="SS.BUSINESS.4.1">SS.BUSINESS.4.1</option>
-          <option value="SS.MATH.2.5">SS.MATH.2.5</option>
-          <option value="SCI.LIFE.3.4">SCI.LIFE.3.4</option>
-        </select>
-        <button
-          className="text-sm text-red-500 underline mb-4 float-right"
-          onClick={() => signOut(auth)}
-        >
-          Log Out
+      {/* How It Works */}
+      <section className="px-6 py-16 text-center">
+        <h2 className="text-3xl font-semibold mb-10">How LessonSphere Helps You Teach Smarter</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          {[
+            { step: "Sign In", desc: "Log in with your email or district account" },
+            { step: "Choose a Standard", desc: "Pick from preloaded state or national standards" },
+            { step: "Click Generate", desc: "Download a full lesson plan instantly" },
+            { step: "Repeat Weekly", desc: "Plans are saved. Customize or regenerate as needed" },
+          ].map(({ step, desc }) => (
+            <div key={step} className="p-6 bg-gray-100 rounded shadow">
+              <h3 className="text-xl font-bold mb-2">✅ {step}</h3>
+              <p className="text-gray-600">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="bg-gray-100 px-6 py-20 text-center">
+        <h2 className="text-3xl font-semibold mb-10">Save Time. Teach Better. Stay Compliant.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {[
+            { title: "🕒 Save Hours Weekly", desc: "Full lesson plans in seconds" },
+            { title: "🎯 Standards Aligned", desc: "Always up-to-date requirements" },
+            { title: "✨ Customizable", desc: "Your tone, your style, your way" },
+          ].map(({ title, desc }) => (
+            <div key={title} className="p-6 bg-white rounded shadow">
+              <h3 className="text-xl font-bold mb-2">{title}</h3>
+              <p className="text-gray-600">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="px-6 py-20 text-center">
+        <h2 className="text-3xl font-semibold mb-10">What Teachers Are Saying</h2>
+        <div className="max-w-3xl mx-auto space-y-8">
+          {[
+            { quote: "I used to spend Sundays building lessons. Now I’m done in 3 minutes.", name: "Mr. Simmons, 8th Grade Science" },
+            { quote: "This is my favorite teaching tool of the year.", name: "Ms. Lee, K-12 Business Ed" },
+            { quote: "It keeps me consistent. And my principal loves the format.", name: "Anonymous Teacher" },
+          ].map(({ quote, name }) => (
+            <blockquote key={name} className="italic text-lg">
+              “{quote}”<br />
+              <span className="block text-blue-700 font-semibold mt-2">— {name}</span>
+            </blockquote>
+          ))}
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="bg-blue-50 px-6 py-20 text-center">
+        <h2 className="text-3xl font-semibold mb-10">Try LessonSphere Free. Upgrade as You Grow.</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {[
+            { title: "Free", price: "$0", desc: "5 plans/month, 1 user" },
+            { title: "Pro", price: "$9/mo", desc: "Unlimited plans, history, support" },
+            { title: "Campus", price: "Custom", desc: "Admin dashboard, integrations" },
+          ].map(({ title, price, desc }) => (
+            <div key={title} className="bg-white p-6 rounded shadow">
+              <h3 className="text-xl font-bold text-blue-700 mb-2">{title}</h3>
+              <p className="text-2xl font-semibold mb-2">{price}</p>
+              <p className="text-gray-600 mb-4">{desc}</p>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Start Free</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="px-6 py-20 text-center">
+        <h2 className="text-3xl font-semibold mb-6">Ready to Plan Smarter?</h2>
+        <p className="text-gray-700 mb-6">Join thousands of educators already simplifying their teaching life.</p>
+        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition">
+          Start for Free
         </button>
-        <button
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
-          onClick={handleGenerate}
-          disabled={loading}
-        >
-          {loading ? "Generating..." : "Generate Lesson Plan"}
-        </button>
-      </div>
+      </section>
     </div>
   );
 }
-
-export default App;
