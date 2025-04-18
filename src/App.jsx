@@ -1,4 +1,3 @@
-// lessonsphere-landing-page/src/App.jsx
 import React from "react";
 
 export default function App() {
@@ -6,13 +5,13 @@ export default function App() {
     <div className="bg-white min-h-screen text-gray-800 font-sans">
       {/* Hero Section */}
       <section className="bg-blue-50 px-6 py-20 text-center">
-        <h1 className="text-4xl font-bold text-blue-700 mb-4">
+        <h1 className="text-4xl font-bold text-[#b61717] mb-4">
           Streamline Your Lesson Planning with AI
         </h1>
         <p className="text-lg text-gray-700 mb-6 max-w-xl mx-auto">
           Instantly generate customized lesson plans aligned with your district’s standards.
         </p>
-        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition">
+        <button className="bg-[#b61717] text-white px-6 py-3 rounded-lg text-lg hover:bg-[#951212] transition">
           Generate Your Lesson Plan
         </button>
       </section>
@@ -63,7 +62,7 @@ export default function App() {
           ].map(({ quote, name }) => (
             <blockquote key={name} className="italic text-lg">
               “{quote}”<br />
-              <span className="block text-blue-700 font-semibold mt-2">— {name}</span>
+              <span className="block text-[#b61717] font-semibold mt-2">— {name}</span>
             </blockquote>
           ))}
         </div>
@@ -79,10 +78,10 @@ export default function App() {
             { title: "Campus", price: "Custom", desc: "Admin dashboard, integrations" },
           ].map(({ title, price, desc }) => (
             <div key={title} className="bg-white p-6 rounded shadow">
-              <h3 className="text-xl font-bold text-blue-700 mb-2">{title}</h3>
+              <h3 className="text-xl font-bold text-[#b61717] mb-2">{title}</h3>
               <p className="text-2xl font-semibold mb-2">{price}</p>
               <p className="text-gray-600 mb-4">{desc}</p>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Start Free</button>
+              <button className="bg-[#b61717] text-white px-4 py-2 rounded hover:bg-[#951212]">Start Free</button>
             </div>
           ))}
         </div>
@@ -92,7 +91,7 @@ export default function App() {
       <section className="px-6 py-20 text-center">
         <h2 className="text-3xl font-semibold mb-6">Ready to Plan Smarter?</h2>
         <p className="text-gray-700 mb-6">Join thousands of educators already simplifying their teaching life.</p>
-        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition">
+        <button className="bg-[#b61717] text-white px-6 py-3 rounded-lg text-lg hover:bg-[#951212] transition">
           Start for Free
         </button>
       </section>
